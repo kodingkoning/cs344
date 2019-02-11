@@ -1,0 +1,39 @@
+CS 344 - Lab 02
+Elizabeth Koning
+February 8, 2019
+
+Exercise 2.1
+a. Hill-climbing and Simulated annealing both solve the problem and result in x = 15.
+b. Hill climbing was faster by 100x.
+c. The inital value of x doesn't make a difference. Regardless of what it is, it can find the peak because it is such a straightforward shape.
+d. It can only be as precise as the delta because that's how big the steps are. If it's, say, 2, then it will be off by 1 if the initial value is even because the solution is odd.
+e. exp_schedule() is the function that assesses if the new state is worse and if so, by how much.
+
+Exercise 2.2
+Reminder: move code into submission folder
+a. Neither one solves the problem, but annealing generally gets much closer. However, it can never solve the problem, because the search space goes on forever in the positive direction.
+b. The starting value makes a huge difference. It will find the maximum that is in the wave of the starting value for hill climbing, and SA will find a maximum on a higher wave.
+c. Yes. The result will always be different from the initial by a multiple of the delta, again. A higher delta will get a higher maximum because of its larger jumps.
+d. The minimum possible value is 0. The maximum possible value continues going higher the more we increase x, as there doesn't seem to be any boundary on it.
+
+Exercise 2.3
+a. Both algorithms work well with the restarts and get better results because they get more chances at it. It makes the general differences more defined, but does improve both of them.
+b. values for a few runs
+        HC   |  SA  |
+        -------------
+run 1 | 21.7 | 35.7 |
+run 2 | 25.8 | 35.7 |
+run 3 | 21.7 | 35.7 |
+run 4 | 25.8 | 38.5 |
+run 5 | 25.8 | 35.7 |
+---------------------
+avg   | 24.2 | 36.3 |
+
+c. Annealing clearly does better than hill climbing. Because of its ability to accept steps to worse solutions, it is able to escape from the local maximum and find a new part of the wave which has a high maximum.
+
+Exercise 2.4
+a. Beam search makes the most sense for hill climbing. This is because SA already has some of the advantages of a broader search. Using beam search, if it is broad enough and the heuristic is helpful enough, could allow hill climbing to get out of its local maximum.
+b. If maintaining a solution only involved remembering the x and value numbers, then I could manage quite a few solutions. A vector in the order of 10^2 or 10^3 pairs would not be unreasonable.
+c. I would change the random restart for loop to use fixed values above and below the current initial x instead of selecting an unrelated initial x. 
+Beam search is quite different from random restarts, but it offers some of the same advantages. Beam search uses new initial values for x that are related to the current one by being steps away from it, while random restarts are, as the name says, random.
+
