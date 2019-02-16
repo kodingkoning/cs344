@@ -1,0 +1,57 @@
+Elizabeth Koning
+CS 344 Lab 3
+
+Exercise 3.1
+a.
+          | DFS  | AC3   | Back  | Min  |
+          +------+-------+-------+------+
+  solved  | yes  | yes   | yes   | yes  |
+  easy    | fail | yes   | yes   | fail |
+  harder  | ---- | fail  | time  | ---- |
+  hardest | ---- | ----  | ----  | ---- |
+
+  I did not attempt the harder puzzles with the algorithms that did not work on easier ones.
+
+  Explanation:
+  AC3 and backtracking were the most effective.
+  It makes sense that AC3 was an effective solution for the easy puzzle because it does pairwise comparisons, which must be all that are needed for the easy puzzle. With the harder puzzles, they need to consider relations between more than two different values. Even though it was quick in its successes and failures, it wouldn't be good for random restarts because I would expect it to make the same errors each time.
+  It makes sense that backtracking was an effective solution for the easy puzzle but not the harder puzzles because it wasn't that it fails on the harder problems, it just takes far too long. For the easy puzzle, it can search the entire space of possible solutions until it finds one that satisfies all of the constraints. I would assume that with sufficient computing time it could solve the other puzzles as well.
+
+b.
+  i. With mrv, backtracking doesn't even complete in a timely manner with the easy puzzle.
+  ii. When the inference is set to forward checking with or without mrv, then it completes all of the puzzles very quickly.
+mrv should work well because focusing on varibles with smaller domains means that it should reach the correct result in less steps, even given worst-case selection. With inference, it makes sense that it would speed up solutions as it did because it can examine the implications of a selection. Often, in just a few steps past a poor selection, it becomes very clear that an error was made.
+
+Exercise 3.2
+
+a.
+    | DFS  | AC3   | Back  | Min  |
+    +------+-------+-------+------+
+4   | fail | fail  | yes   | yes  |
+5   | ---- | fail  | yes   | yes  |
+6   | ---- | fail  | yes   | yes  |
+7   | ---- | ----  | yes   | yes  |
+
+In summary:
+DFS and AC3 do not work at all. DFS doesn't work because of a bug.
+Min conflicts works with up to n = 10000 (although larger numbers do take longer.)
+Backtracking works with a maximum n of 28 in a reasonable amount of time.
+
+Backtracking works so well becuase it thoroughly searches the possible arrangements of queens. It takes some time in higher cases because it does do it so exhaustively. If there is a solution, it will be able to find it eventually, because the queen's problem can be solved through going through all the possible arrangments of the queens. If we were trying to find solutions not just for n queens, but also each number of queens up to n queens, then this might be a great solution to go with. However, min conflicts is much faster.
+
+Min conflicts works so well because it chooses the variable with the most conflicts and then tries to decrease the number of conflicts. We don't really care about the path it took to get to the solution, so local search works well. It's also straightforward to measure which non-solutions are better or closer to a solution for this problem. It doesn't seem to have a problem with getting stuck in local minima, which for some problems can be a concern. It takes enough steps to get out of those areas and find global minima.
+
+b. Using mrv instead of first unassigned variable makes it go much faster, so it can work with greater values of n in a timely manner. It works well with or without forward tracking, which makes much less of a difference, but does seem to slightly speed it up. mrv is helpful because then it starts with a narrower space. This works better than for sudoku because sudoku has so many more constraints, but n queens (with high values of n) has a larger domain size than the sudoku with possible values in a square.
+
+c. To work for n = 1000, max_steps needs to be around 60. For 60, it worked for me. For 50 it sometimes worked and sometimes failed.
+
+Exercise 3.3
+
+a.
+CSP is made up of sets of variables, domains, and constraints. The traditional search does not use these three things, but the two problem types do share the attributes of states and actions. They both need these two things because they need states as the different places searched and actions to move between states. 
+The traditional search use a variety of approaches to the goal test, but they share the attribute with the CSP. The goal for CSP is to satisfy all of the constraints, so it is more clearly defined across different problems.
+The results from a traditional search are also have a wider array of possibilities. For some of them, how it gets to the result is important. For others, that isn't the case. CSP doesn't focus on how it gets to the solution because it may violate the constraints along the way or have many partially solutions before it gets to the final arrangement.
+
+b. For heuristics, CSPs have the advantage of using the constraints and which possibilities violate fewer constrains at heuristics. For the traditional search problem, they are again going to have a more broad array of different types of heuristics. CSPs will be well suited to heuristics that consider the minimum remaining values, etc., where the traditional search problems may not have the same partial solutions.
+
+
