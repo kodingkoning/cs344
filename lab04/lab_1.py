@@ -1,5 +1,6 @@
 """
-CS 344 Lab 4
+CS 344 Lab 04
+Exercise 1
 
 Elizabeth Koning -- February 22, 2019
 """
