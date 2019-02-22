@@ -61,7 +61,7 @@ class TSP(Problem):
 
 if __name__ == '__main__':
     # set up city with random but symmetrical distances
-    num_cities = 10
+    num_cities = 100
     min_dist = 1
     max_dist = 10
     initial = np.arange(num_cities)
@@ -89,4 +89,10 @@ if __name__ == '__main__':
     print(hill_solution)
     print("Hill-climbing value = " + str(p.value(hill_solution)))
 
-    # TODO: simmulated annealing (with same distances and start)
+    annealing_solution = simulated_annealing(p)
+    print("\nSimulated Annealing soltion:")
+    print(annealing_solution)
+    print("Simulated Annealing value = " + str(p.value(annealing_solution)))
+
+    #TODO: write up explanations of the problem and its setup.
+    #TODO: explain why hill-climbing works better here
