@@ -13,10 +13,6 @@ import numpy as np
 from search import Problem, hill_climbing, simulated_annealing
 
 class TSP(Problem):
-    """
-    TODO: describe why I did this (in the Jupyter notebook)
-    """
-
     def __init__(self, initial, distances, num_cities):
         self.initial = initial
         self.distances = distances
@@ -52,44 +48,52 @@ class TSP(Problem):
             value += self.distances[state[i]][state[(i+1)%self.num_cities]]
         return -value
 
-# TODO: describe state and action representations
-# TODO: configure the system to build TSP worlds of any number of cities with random distances (symmetric)
-# TODO: explain which local search algorithm works better
 
-if __name__ == '__main__':
-    # set up city with random but symmetrical distances
-    num_cities = 100
-    min_dist = 1
-    max_dist = 10
-    initial = np.arange(num_cities)
+"""
+State and action representations
+For the local search, the TSP extends the Problem from csp.py and implements states and actions.
+The states, as in the n-queens problem, are a complete solution. In this case, we start with a list of the cities. The cities are numbered, so they are in that order to start.
+The order of the cities in the list represents the state. The last city loops around and leads back to the first city. This first city is only once in the list because the value() considers that it needs to loop around to the beginning again.
+The actions are represented as pairs of cities. Any two cities can be swapped in the travel order. Any of these actions keep the state as a complete solution, but it may make the value larger or smaller.
 
-    distances = np.zeros((num_cities, num_cities))
-    for i in range(num_cities):
-        for j in range(num_cities-i):
-            row = i
-            col = num_cities-j-1
-            if row == (col):
-                distances[row][col] = 0
-            else:
-                distances[row][col] = random.randint(min_dist, max_dist)
-                distances[col][row] = distances[row][col]
+Below, a system with any number of cities can be created by changing the num_cities variable. From there, it randomly calculates distances between all the cities.
+The salesman can travel from any city to any other city in one step.
 
-    print("Distances:")
-    print(distances)
+The hill-climbing algorithm works consistently better and by a significant amount, regardless of the size of the system. (As long as the number of cities is high enough that both algorithms do not always get the ideal solution, as happens with num_cities < 5.)
+If the cities were geographically coherent, then this would make sense. Since they are not, this is slightly more surprising.
+I would have expected that simulated annealing would work better here. For this problem (since the cities are not geogrpahically cohert), there are times that it is beneficial to be willing to jump to a worse value in order to get out of a local optima and find the global optima.
+"""
 
-    p = TSP(initial, distances, num_cities)
-    print("Initial:")
-    print(initial)
+# set up city with random but symmetrical distances
+num_cities = 10
+min_dist = 1
+max_dist = 10
+initial = np.arange(num_cities)
 
-    hill_solution = hill_climbing(p)
-    print("\nHill-climbing solution:")
-    print(hill_solution)
-    print("Hill-climbing value = " + str(p.value(hill_solution)))
+distances = np.zeros((num_cities, num_cities))
+for i in range(num_cities):
+    for j in range(num_cities-i):
+        row = i
+        col = num_cities-j-1
+        if row == (col):
+            distances[row][col] = 0
+        else:
+            distances[row][col] = random.randint(min_dist, max_dist)
+            distances[col][row] = distances[row][col]
 
-    annealing_solution = simulated_annealing(p)
-    print("\nSimulated Annealing soltion:")
-    print(annealing_solution)
-    print("Simulated Annealing value = " + str(p.value(annealing_solution)))
+print("Distances:")
+print(distances)
 
-    #TODO: write up explanations of the problem and its setup.
-    #TODO: explain why hill-climbing works better here
+p = TSP(initial, distances, num_cities)
+print("Initial:")
+print(initial)
+
+hill_solution = hill_climbing(p)
+print("\nHill-climbing solution:")
+print(hill_solution)
+print("Hill-climbing value = " + str(p.value(hill_solution)))
+
+annealing_solution = simulated_annealing(p)
+print("\nSimulated Annealing soltion:")
+print(annealing_solution)
+print("Simulated Annealing value = " + str(p.value(annealing_solution)))
