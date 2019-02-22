@@ -4,26 +4,31 @@ Run a local search on the course scheduling problem
 Elizabeth Koning, for CS344, February 2019
 """
 
-from csp import min_conflicts, CSP
+from csp import min_conflicts, CSP, parse_neighbors
 
-courses = ["cs108", "cs112", "cs212", "cs214", "cs232", "cs262", "cs300"]
-faculty = ["dschuurman", "adams", "vlinden", "hplantin", "pmb4"]
-times = ["mwf900", "mwf1030", "mwf1130", "mwf1230", "mwf130"]
-rooms = ["nh253", "sb382"]
+courses = ['cs108', 'cs112', 'cs212', 'cs214', 'cs232', 'cs262', 'cs300']
+faculty = ['dschuurman', 'adams', 'vlinden', 'hplantin', 'pmb4']
+times = ['mwf900', 'mwf1030', 'mwf1130', 'mwf1230', 'mwf130']
+rooms = ['nh253', 'sb382']
 # TODO: add constraints
-assignments = {"cs108": "dschuurman", "cs112": "adams", "cs212":"hplantin", "cs214":"adams", "cs232":"pmb4", "cs262":"vlinden"}
+assignments = {'cs108': 'dschuurman', 'cs112': 'adams', 'cs212':'hplantin', 'cs214':'adams', 'cs232':'pmb4', 'cs262':'vlinden', 'cs300':'vlinden'}
 # neighbors = all combinations of classes
 num_courses = len(courses)
 
-neighbors = []
+# neighbors = []
 # list all pairs of courses
 # does not include pairing courses with themselves or pairs that are the same in the other order
 # TODO: make a function for this
+neighbors_string = ""
 for i in range(num_courses):
     for j in range(num_courses-i-1):
         course1 = courses[i]
         course2 = courses[num_courses-j-1]
-        neighbors.append([course1, course2])
+        neighbors_string += course1 + ":" + course2 + ";"
+        # neighbors.append([course1, course2])
+
+neighbors_string = neighbors_string[:-1] # get rid of the last semicolon
+neighbors = parse_neighbors(neighbors_string, variables=courses)
 
 PROF = 0
 TIME = 1
@@ -58,7 +63,6 @@ for course in courses:
             for room in rooms:
                 domains[course].append( [prof, time, room] )
 
-print(domains)
 
 
 result = min_conflicts(CSP(courses, domains, neighbors, scheduling_constraints))
