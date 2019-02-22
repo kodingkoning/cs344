@@ -1,0 +1,10 @@
+Elizabeth Koning
+CS 344 -- Homework 1
+Question 1. Introspection and AI
+
+Using introspection to inform AI in modeling human cognitive processes is an obvious first stage of modeling human thought. However, the effectiveness of this strategy depends both on the goal of the AI. If the goal is to create a computer that thinks in a similar manner to a human (that is, approaching problems in the same way), then introspection probably makes sense. In this case, it isn't so much the results that matter, as the way the program gets there. If the goal is a program that ouptuts similar results to a human's conclusion, then I would say that introspection will probably not be the best way to do that. People's minds are complex, even at the level at which we can examine our own minds. The way we think is not the most efficient because of this complexity. Because of this, even if we want human-style conclusions, I would say that introspection and modeling the computations after human thought would not be the best way to get there.
+
+The goal could also be finding accurate results regardless of how a person would approach the problem or if they would come up with an accurate answer. This is a different question than what was asked, but I would say it is a more important question. If the computers can do things that we can't, then they contribute much more value.
+
+Revisiting the issue of modeling patterns of human thought processes, introspection would solve the issue at one level. Neural networks would solve the issue on another level. Introspection, though, would approach the problem in the same way as a person. It would value the same things, and it would start with the same focuses. If we want the AI program to focus on the same kinds of patterns and connections as a person would, then introspection is the only way to do it. Anything else either surpasses this level or is too basic for us to be able to model the whole human mind and make it to this level. 
+

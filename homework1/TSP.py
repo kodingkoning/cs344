@@ -10,9 +10,7 @@ Elizabeth Koning, for CS344, February 2019
 
 import string, random
 import numpy as np
-from search import Problem, hill_climbing, simulated_annealing, \
-    exp_schedule
-# need hill_climbing and simulated_annealing for the two approaches, need exp_schedule for annealing
+from search import Problem, hill_climbing, simulated_annealing
 
 class TSP(Problem):
     """
@@ -29,9 +27,10 @@ class TSP(Problem):
         starts = np.zeros(0, dtype=np.int8)
         ends   = np.zeros(0, dtype=np.int8)
 
-        # TODO: look for a way to do this without a for loop
         for city in range(self.num_cities):
+            # create list of this city as the first city to flip
             starts = np.append(starts, np.full(self.num_cities-city-1, city, dtype=np.int8))
+            # create list of all the later cities as second cities to switch (all earlier cities will have the current city as the second city of the flip)
             ends   = np.append(ends, np.arange(city+1, self.num_cities, dtype=np.int8))
 
         actions = np.append(starts, ends)
@@ -48,8 +47,6 @@ class TSP(Problem):
         return new_state
 
     def value(self, state):
-        # TODO: make it count up the length of the route
-        # NOTE: this will be maximized, so make sure that higher is better
         value = 0
         for i in range(len(state)):
             value += self.distances[state[i]][state[(i+1)%self.num_cities]]
