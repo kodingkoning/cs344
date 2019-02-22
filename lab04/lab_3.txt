@@ -1,12 +1,28 @@
-"""
 CS 344 Lab 04
 Exercise 2
 
 Elizabeth Koning -- February 22, 2019
-"""
 
-"""
 Exercise 4.3
 a.
-i. P(User) 
-"""
+i. P(User): True: 0.089, False: 0.911
+ii. P(test | user) = 0.99
+iii. P(-test | user) = 0.01
+iv. P(test | -user) = 0.02
+v. DistributionP(user | test):
+P(test) = P(test | -user)*P(-user) + P(test | user)*P(user) = 0.02*0.911 + 0.99*0.089 = 0.106
+P(User | test) = P(test | user) * P(user) / P(test) = 0.99 * 0.089 / 0.106 = 0.831
+Distribution: True: 0.831, False: 0.169
+
+b.
+P(cancer) = 0.01
+P(positive | cancer)  = 0.8
+P(positive | -cancer) = 0.096
+
+The probability of having a positive screening (regardless of cancer status) is:
+P(positive) = P(positive | cancer)*P(cancer) + P(positive | -cancer)*P(-cancer) = 0.8*0.01 + 0.096*0.99 = 0.103
+
+The probability that a women who had a positive mammography in a screening actually has cancer is:
+P(cancer | positive) = P(positive | cancer) * P(cancer) / P(positive) = 0.8 * 0.01 / 0.103 = 0.078
+So, it is still more likely than not that the woman does not have breast cancer. The cancer are higher than if she had a negative test or if we didn't know her test results though, with a probability of 7.8%
+
