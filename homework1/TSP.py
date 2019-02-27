@@ -18,6 +18,7 @@ class TSP(Problem):
         self.distances = distances
         self.num_cities = num_cities
 
+    # old version of actions -- creates a list of all the possible swaps
     def actions(self, state):
         # lists all pairs of cities that could be flipped in the order
         starts = np.zeros(0, dtype=np.int8)
@@ -32,6 +33,13 @@ class TSP(Problem):
         actions = np.append(starts, ends)
         actions = actions.reshape(-1, 2, order='F')
         return actions
+
+    # new version of actions -- creates a list of six randomly selected swaps
+    # def actions(self, state):
+    #     actions = []
+    #     for n in range(6):
+    #         actions.append(random.sample(state.tolist(), 2))
+    #     return actions
 
     def result(self, state, action):
         # return the state that results from executing the given action in the current state
@@ -67,33 +75,49 @@ I would have expected that simulated annealing would work better here. For this 
 # set up city with random but symmetrical distances
 num_cities = 10
 min_dist = 1
-max_dist = 10
+max_dist = 1000
 initial = np.arange(num_cities)
 
-distances = np.zeros((num_cities, num_cities))
-for i in range(num_cities):
-    for j in range(num_cities-i):
-        row = i
-        col = num_cities-j-1
-        if row == (col):
-            distances[row][col] = 0
-        else:
-            distances[row][col] = random.randint(min_dist, max_dist)
-            distances[col][row] = distances[row][col]
+for n in range(10):
+    distances = np.zeros((num_cities, num_cities))
+    for i in range(num_cities):
+        for j in range(num_cities-i):
+            row = i
+            col = num_cities-j-1
+            if row == col:
+                distances[row][col] = 0
+            else:
+                distances[row][col] = random.randint(min_dist, max_dist)
+                distances[col][row] = distances[row][col]
 
-print("Distances:")
-print(distances)
+    # print("Distances:")
+    # print(distances)
+    #
+    p = TSP(initial, distances, num_cities)
+    # print("Initial:")
+    # print(initial)
 
-p = TSP(initial, distances, num_cities)
-print("Initial:")
-print(initial)
+    print("Run " + str(n))
 
-hill_solution = hill_climbing(p)
-print("\nHill-climbing solution:")
-print(hill_solution)
-print("Hill-climbing value = " + str(p.value(hill_solution)))
+    hill_solution = hill_climbing(p)
+    # print("\nHill-climbing solution:")
+    # print(hill_solution)
+    print("Hill-climbing value = " + str(p.value(hill_solution)))
 
-annealing_solution = simulated_annealing(p)
-print("\nSimulated Annealing soltion:")
-print(annealing_solution)
-print("Simulated Annealing value = " + str(p.value(annealing_solution)))
+    annealing_solution = simulated_annealing(p)
+    # print("\nSimulated Annealing solution:")
+    # # print(annealing_solution)
+    print("Simulated Annealing value = " + str(p.value(annealing_solution)))
+
+
+"""
+Amendment:
+
+When I changed the actions() method to select only 6 random pairs for swapping rather than all the possible pairs, I found that I also needed to change the distances between cities in order to have simulated annealing work better.
+
+Once I used the new actions() method and make the range of distances between cities larger, the results were typically better for the simulated annealing.
+
+I also tried it with the larger range of distances but the old actions() method.
+
+Based on the trials I recorded (see the TSP results Excel document for the specific values), it was clear that for the new actions() method and the larger range of city distances simulated annealing works better.
+"""
