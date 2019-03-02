@@ -21,6 +21,16 @@ print("a.")
 print("i. " + enumeration_ask('Raise', dict(Sunny=T), weather).show_approx())
 print("ii. " + enumeration_ask('Raise', dict(Happy=T, Sunny=T), weather).show_approx())
 
+"""
+By hand:
+i. P(Raise | sunny) = <0.01, 0.99>
+Which is taken directly from the table because raise does not depend on sunny and we have the probability of a raise.
+
+ii. Using a diagnostic computation
+P(Raise | happy ^ sunny) = alpha * sum[P(Raise, happy, sunny)] = alpha * sum[P(Raise) * P(sunny) * P(happy | raise ^ sunny) ] = alpha * < 0.01*0.7*1.0, 0.99*0.7*0.9> = alpha * <0.007, 0.6237> = <0.007, 0.6237> / 0.6307 = <0.011, 0.989>
+TODO: figure out why this is coming out slightly off (but it is close)
+"""
+
 # b. P(Cancer | a positive result on test 1, but a negative result on test 2)
 print("b.")
 print("i. " + enumeration_ask('Raise', dict(Happy=T), weather).show_approx())
