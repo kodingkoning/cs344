@@ -1,0 +1,27 @@
+Elizabeth Koning
+CS 344, Homework 2
+
+Problem 1: What makes this approach to SPAM Bayesian?
+
+This approach is Bayesian because... TODO
+
+
+Problem 2, b-d
+
+TODO: copy results into the Jupyter notebook
+b. 2^4 = 16. This comes from the 4 different variables, each of which can be true or false.
+
+c. 9. This is counted from the multiply connected network.
+
+d.
+i. P(Cloudy) = <0.5, 0.5>
+ii. P(Sprinker | cloudy) = <0.1, 0.9>
+iii. P(Cloudy| the sprinkler is running and it’s not raining) = alpha * <0.5*0.1*0.2, 0.5*0.5*0.8> = alpha * <0.01, 0.2> = <0.0476, 0.9524>
+iv. P(WetGrass | it’s cloudy, the sprinkler is running and it’s raining) = alpha * <0.5*0.1*0.8*0.99, 0.5*0.1*0.8*0.01> = alpha * <0.99, 0.01> = <0.99, 0.01>
+v. P(Cloudy | not GrassWet) = alpha * sum( P(C, r, s, not g) )
+  = alpha * sum(s)( sum(r)( P(C)*P(s^r)*P(g | s^r) ) )
+      s ^ r       TT              TF              FT            FF
+  = alpha * <0.5*0.08*0.01 + 0.5*0.02*0.10 + 0.5*0.72*0.10 + 0.5*0.18*1.00, (C)
+             0.5*0.10*0.01 + 0.5*0.40*0.10 + 0.5*0.10*0.10 + 0.5*0.40*1.00> (not C)
+  = alpha * <0.1274, 0.2255>
+  = <0.361, 0.639>
