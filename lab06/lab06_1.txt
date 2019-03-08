@@ -1,0 +1,38 @@
+CS 344 Lab 6
+Elizabeth Koning
+working with Ziqi Chen and Joyce Chew
+
+Exercise 6.1
+a. Framing
+1. We want our machine learned model to classify emails as important or unimportant.
+
+2. Our ideal outcome is to mark emails that the Gmail user finds to be worth time, attention, and/or action.
+
+3.
+Our success metrics are:
+ - read rate
+ - time spent interacting with email (includes responding as well as other interactions)
+ - time until action/read
+
+Our key results (KR) for the success metrics are:
+ - Our system marks 70% of the emails the user reads as important
+ - Our system marks 90% of the emails that the user performs a significant action with as important (lengthy response, clicking link, downloading attachment)
+ - Users interact with/respond to important emails before the unimportant emails
+
+Our ML model is deemed a failure if:
+ - Emails marked as important are read/interacted with at the same rate as emails not marked as important
+
+4.
+
+The output from our ML model will be an indication of how important an email is.
+
+The output is defined as a probability of whether the user interacts with/responds to the email.
+
+5.
+TODO
+
+6. TODO
+
+
+
+b. Formulating

@@ -38,6 +38,9 @@ class SpamFilter:
             if g + b > min_threshold:
                 self.probs[token] = max(0.01, min(0.99, min(1.0, b/self.nbad) / (min(1.0, g/self.ngood) + min(1.0, b/self.nbad))))
 
+        print("Dictionary")
+        print(self.probs)
+
     def filter(self, text):
         product = 1.0
         comp_product = 1.0
@@ -66,6 +69,7 @@ print(spam_filter.filter(["i", "am"]))
 print(spam_filter.filter(["i", "do"])) # ham list
 print(spam_filter.filter(["i", "am", "spam", "spam", "i", "am"])) # spam list
 print(spam_filter.filter(["do", "i", "like", "green", "eggs", "and", "ham"])) # ham list
+print(spam_filter.filter(["i", "do", "not", "like", "that", "spamiam"]))
 
 
 # Problem 2a
