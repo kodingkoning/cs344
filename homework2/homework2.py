@@ -39,7 +39,7 @@ class SpamFilter:
                 self.probs[token] = max(0.01, min(0.99, min(1.0, b/self.nbad) / (min(1.0, g/self.ngood) + min(1.0, b/self.nbad))))
 
         print("Dictionary")
-        print(self.probs)
+        print(self.probs, '\n')
 
     def filter(self, text):
         product = 1.0
@@ -61,6 +61,7 @@ class SpamFilter:
 spam_filter = SpamFilter(spam_corpus, ham_corpus)
 
 # examples
+print("Examples")
 print(spam_filter.filter(["i"])) # single word
 print(spam_filter.filter(["blah"])) # single word not in corpuses
 print(spam_filter.filter(["spamiam", "am"]))
