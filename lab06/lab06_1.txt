@@ -1,4 +1,4 @@
-CS 344 Lab 6
+CS 344 Lab 6 Exercise 1
 Elizabeth Koning
 working with Ziqi Chen and Joyce Chew
 
@@ -29,10 +29,22 @@ The output from our ML model will be an indication of how important an email is.
 The output is defined as a probability of whether the user interacts with/responds to the email.
 
 5.
-TODO
+Our output must be received as emails come in. The classification of the email affects the notification the user receives, so we need the information when the account first receives the email.
 
-6. TODO
+The output will be used to display the messages for a user in their inbox. It will also send a notification to the user for important emails, but not for unimportant emails.
 
+6.
+If we didn't use ML, we would look for email attributes like:
+ - only being sent to the one recipient
+ - addressing the recipient by name
+ - replying to a message from our user
+ - being from an address in our address book
+ - having questions in it
 
 
 b. Formulating
+7a. binary classification, which predicts {important, unimportant}
+7b. We already have a binary classification problem.
+8. inputs: "to" list, first line of message, subject line (to consider if it's a reply)
+9. All of the inputs come from the email message as it is received by the user.
+10. All three of the inputs are easy to obtain. Parsing the first line of the message into helpful information would be the most challenging part.
