@@ -1,0 +1,37 @@
+Exercise 7.2
+
+a. TODO: get from the other file
+
+b.
+Task 1:
+train_model(
+    learning_rate=0.00001,
+    steps=1000,
+    batch_size=1
+)
+For this, I  increased the number of steps by a factor of 10.
+The
+I also tried modifying the batch size. I increased it to 3, but it made no difference. When I tried to increase the learning rate by a factor of 10 alongside my change on the steps it made it worse again.
+
+When I look at the solution, I noticed that they did increase the learning rate, but only by twice. They also only increased the steps to 500. They did increase the batch size to 5, so with the other changes, it dose apparently help.
+
+My solution and their solution did give exactly the same final RMSE, interestingly enough. So there are multiple combinations of values that can give these results, which they acknowledge in the note about tweaking the model configuration.
+
+Both gave 167.70
+
+Task 2:
+train_model(
+    learning_rate=0.00001,
+    steps=1000,
+    batch_size=1,
+    input_feature = "population"
+)
+
+The final RMSE for this model and input was 190.07, so higher than for the total_rooms. The version that they suggested as the solution gave a RMSE of 176.02, so the parameters there fit better in this situation.
+
+c.
+The hyper-parameters are: learning rate, steps, and batch size.
+Like they say in the instructions, there are not strict rules, it is all dependent on the data. These are some of the rules of thumb they suggest:
+For the learning rate, it might be too high if the training error is decreasing slowly. However, it might be too high. Basically, you need to try it and find out.
+For the steps, you can increase the number of steps if it does not converge, but as the number of steps increases, it takes longer.
+For batch sizes, it says it's better to have larger batches and then narrow down to smaller ones.
