@@ -20,3 +20,6 @@ print("Testing")
 print(" Rank: ", x_test.ndim)
 print(" Shape: ", x_test.shape)
 print(" Data type: ", x_test.dtype)
+
+# Note about the training and testing shape: I noticed that the lab example used the targets for the size and shape. I used the x data for the sake of consistent comparison. 
+# There are the same number of examples and datatype measured either way. The shape is different.
