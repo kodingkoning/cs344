@@ -1,0 +1,17 @@
+CS 344, Lab 7, Exercise 1
+Elizabeth Koning
+
+a.
+Pandas exercise 1
+cities['saint and large'] = (cities['City name'].apply(lambda name: name.startswith('San'))) & (cities['Area square miles'] > 50)
+cities
+
+Pandas exercise 2
+cities.reindex([3, 0, 5, 1, 4])
+cities
+
+b. Why would one use Pandas rather than the standard data manipulation features provided by NumPy?
+The data manipulation features provided by Pandas can be helpful, and they are not available in NumPy. In a situation where one wants to use the features of Pandas, like the vectorized operations, reindexing, or adding columns, it is more practical to use Pandas.
+
+c. Under what circumstances would it be useful to reorder/shuffle a Pandas DataFrame?
+Shuffling a Pandas DataFrame could be particularly helpful if you need to separate your data into train and test segments. If you shuffle the DataFrame, then you can just take the first x as training data and the last y as testing data. This is an easy way to divide it randomly.

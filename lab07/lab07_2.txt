@@ -1,0 +1,11 @@
+CS 344, Lab 7, Exercise 2
+Elizabeth Koning
+
+a. Compare and contrast categorical vs numerical data
+Categorical data is information like words or labels that divide the examples into different groups. Numerical data is a information that you want to treat as numbers. It makes sense to average numerical data, but not categorical data, even if the categories are numbers.
+
+b. Submit solutions to tasks 1–2. Include your best hyper-parameter values and the resulting RMSE, but not the training output.
+TODO
+
+c. What are the hyper-parameters learned in these exercises and is there a “standard” tuning algorithm for them?
+TODO
