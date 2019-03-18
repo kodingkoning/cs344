@@ -1,0 +1,51 @@
+CS 344, Lab 7, Exercise 3
+Elizabeth Koning
+
+a.
+Task 1:
+california_housing_dataframe["rooms_per_person"] = (
+    california_housing_dataframe["total_rooms"] / california_housing_dataframe["population"])
+
+calibration_data = train_model(
+    learning_rate=0.05,
+    steps=500,
+    batch_size=5,
+    input_feature="rooms_per_person")
+
+Here, we divided the number of rooms by the number of people to measure the population density. Next, we increased the learning rate of the
+
+Task 2:
+plt.figure(figsize=(15, 6))
+plt.subplot(1, 2, 1)
+plt.scatter(calibration_data["predictions"], calibration_data["targets"])
+
+On this plot, I do see quite a few points far out to the right that look like outliers.
+
+It seems that we have a few points where the prediction and/or the target was very high. For some of the points the prediction was right, but for others it was not.
+
+Task 3:
+First, we can see what the distribution actually looks like, instead of as a vertical line:
+california_housing_dataframe["rooms_per_person"] = (
+    california_housing_dataframe["rooms_per_person"]).apply(lambda x: min(x, 5))
+
+_ = california_housing_dataframe["rooms_per_person"].hist()
+
+Next, we can retrain with just the filtered data:
+calibration_data = train_model(
+    learning_rate=0.05,
+    steps=500,
+    batch_size=5,
+    input_feature="rooms_per_person")
+
+
+Then, when we look at the scatter plot again, the plot is more spread out:
+_ = plt.scatter(calibration_data["predictions"], calibration_data["targets"])
+
+By doing this, we didn't get our nice diagonal line, but it did remove the outliers and made it a more understandable graph. It also improved our RMSE if we acknowledge that we can only make predictions when the rooms per person are less than 5.
+
+
+b. What is the purpose of introducing synthetic features?
+We introduce synthetic features to be able to examine the effect on the target of relationships between features. In this case, we didn't have information about population density, but we did have information that could get us to that information. This gives us the flexibility to examine how the proportional relationship between rooms and people connects to the target.
+
+c. What are outliers and what is typically done with them?
+Outliers are the points that lie far from the main body of points. They are typically removed or clipped. Here, they picked a maximum that covered most of the values and then removed the few above there.
