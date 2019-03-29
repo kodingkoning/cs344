@@ -5,8 +5,42 @@ March 29, 2018
 Exercise 2
 
 a.
-
+  As well as a learning rate, the FtrlOptimizer also has a learning_rate_power, which defaults to -0.5 (and the example uses the default). If it is 0, it will use a fixed learning rate, but with non-zero values, it controls how the learning rate decreases through the training. Later in the training, the learning_rate is smaller. The paper linked in the documentation explains this in more detail. As the amount of data we've looked at increases, we should be learning more slowly.
 
 b.
+  Binning turns continuous data into discrete data. The benefit of this is that it can reflect more complex relationships between the target and the feature without using a complicated function. Like in the example with the latitudes, it can show multiple peaks in the data. We could also try to find a function that shows the shape of the data, but the bins simplify the calculation to become discrete. The discrete data can then silently become binary features with one-hot encoding.
 
-c. 
+c.
+  Task 1:
+  bucketized_latitude = tf.feature_column.bucketized_column(
+  latitude, boundaries=get_quantile_based_boundaries(
+    training_examples["latitude"], 10))
+  bucketized_housing_median_age = tf.feature_column.bucketized_column(
+    housing_median_age, boundaries=get_quantile_based_boundaries(
+      training_examples["housing_median_age"], 10))
+  bucketized_median_income = tf.feature_column.bucketized_column(
+    median_income, boundaries=get_quantile_based_boundaries(
+      training_examples["median_income"], 10))
+  bucketized_rooms_per_person = tf.feature_column.bucketized_column(
+    rooms_per_person, boundaries=get_quantile_based_boundaries(
+      training_examples["rooms_per_person"], 10))
+
+  With these buckets (all of size 10), the RMSE was 88.69. Bucketing makes sense as a good way to turn continuous data into discrete data. All of these features make sense to bucket. median_income and rooms_per_person make less sense than latitude and housing_median_age, but there may be factors that I don't anticipate that make bucketing effective.
+
+  Task 2:
+  TODO
+  My code:
+    long_x_lat = tf.feature_column.crossed_column(["longitude", "latitude"], 1000)
+  The resulting RMSE for the model that includes long_x_lat as one feature is 78.66.
+
+  The correct version uses the bucketized versions of both:
+    long_x_lat = tf.feature_column.crossed_column(
+    set([bucketized_longitude, bucketized_latitude]), hash_bucket_size=1000)
+  This changes the RMSE to 80.36.
+
+  Another useful feature cross could be median_income and housing_median_age. It's possible that some old areas are valuable because they are old and historic and others are just old and rundown. Pairing it with median_income could give us a better picture of which is which.
+
+  Exchanging the log_x_lat for income_x_age leads leads to an RMSE of 81.82, which is not quite as good as long_x_lat.
+  Code:
+    income_x_age = tf.feature_column.crossed_column(
+    set([bucketized_median_income, bucketized_housing_median_age]), hash_bucket_size=1000)
