@@ -1,0 +1,23 @@
+CS 344 Lab 8
+Elizabeth Koning
+March 29, 2018
+
+Exercise 3
+
+a. Compare and contrast Seaborn vs. MatPlotLib.
+
+  Here, we use seaborn for pairplot. In the Feature Sets Exercise, we used correlation_dataframe.corr() to view the pairwise correlations.
+
+  Seaborn gives us graphs and MatPlotLib gives us values. If we just want to know how correlated two features are, MatPlotLib is very convenient. We can compare correlations to each other and quickly pick out the strongest one. Seaborn gives us the benefit of showing the more complex relationship by displaying dot plots. We can recognize if there is a relationship that is non-linear as well.
+
+b. How big is this dataset and does it seem of an appropriate size for this problem?
+  This dataset has 397 rows. This seems like a reasonable size. We're looking at automobiles from a particular range of time, so we couldn't have a massive sample size, but ~400 is enough to work with although it is much smaller the the California housing dataset and slightly smaller than the Boston housing dataset.
+
+c.
+  The way they normalize the data is by taking each value, subtracting the mean, and then dividing the the standard deviation. This finds how many standard deviations the value is from the mean.
+
+d.
+  No, this is not a linear regression model. It is a regression model because we are predicting a continuous value out of the model with the MPG. However, it is not linear because the activation function we are using is tf.nn.relu instead of just a linear function.
+
+e.
+  It makes sense to use a smaller network with a smaller dataset. As they say in the conclusion, this helps avoid overfitting. With a large training dataset, it will take a larger network before we overfit. With a small network, we can overfit very rapidly and if we keep adding to the network we will either not see improvement or we will start overfitting. The early stopping technique worked very well in this example to balancing this and save computation time.
