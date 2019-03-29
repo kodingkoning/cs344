@@ -1,0 +1,34 @@
+CS 344 Lab 8
+Elizabeth Koning
+March 29, 2018
+
+Exercise 1
+a.
+  The Pearson correlation coefficient measures the correlation for a pair of features or a feature and the target. This is between -1.0 and 1.0.i
+
+  In the correlation table, we can see each feature's correlation with each other feature. For Pearson's correlation coefficient for a feature with itself, it is always 1, a perfect positive correlation. One interesting correlation is between the target and median_income, with a correlation of 0.7. It makes sense to have a strong positive correlation because people with more money are likely to purchase more expensive homes. We can expect this to be the best predictor of the target.
+
+b.
+
+Task 1:
+
+  Using just the median_income, the RMS error of the final period was 227.26.
+
+  Next, I tried adding in rooms_per_person, because it had the second most extreme correlation, with 0.2. All the others were 0.0 or 0.1. However, rooms_per_person is as strongly correlated with median_income as it is with the target. The RMSE was 226.32.
+
+  Since having somewhat correlated features didn't help, I looked next at which features were not correlated with median_income. One feature that has 0.0 correlation with median_income and a non-zero correlation with the target is households. Using median_income and households, the RMSE is 175.18, but the graph shows that it fluctuated significantly.
+
+  The writer of the activity suggests using median_income and latitude. This is interesting because latitude has a -0.1 correlation with the target, but it also has a -0.1 correlation with the target, unlike longitude, which as a -0.0 correlation with median_income.
+
+  Using median_income and latitude, the RMSE is 113.12, and it nicely decreases to that value, starting at 165.54, dropping steeply, and then leveling out.
+
+  Using median_income and longitude, the RMSE is 113.76. It does not have as smooth a descent as with latitude although it has a similar error.
+
+Task 2:
+
+  The solution in the activity splits the latitudes into buckets of size 1. The RMSE for this is 140.13.
+
+  Next, I tried binning them with:
+  LATITUDE_RANGES = zip(np.arange(32.0, 44.5, 0.5), np.arange(32.5, 45, 0.5))
+
+  With the new bins of size 0.5, the RMSE was 140.28. Interestingly, the smaller bins were no better than the larger ones. Looking at the graph, that makes sense. The places that it would make sense to draw a line between "in" and "out" of the city appear to fall closer to the latitudes than the half latitudes.
