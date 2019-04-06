@@ -1,0 +1,23 @@
+CS 344 Lab 9
+Elizabeth Koning
+
+Exercise 3
+
+a. Exercise 1
+  i. 1500 examples each - 1000 for training and 500 for validation
+  ii. The accuracy of the first convnet has an accuracy of 0.6790 and a loss of 1.8033 (on the validation set). Our version is class did much better, with 0.9916 accuracy on the testing set and much less code. However, this is also on a different dataset with numbers instead of cats or dogs.
+  iii. In the intermediate representations, I noticed that the farther we go down, the less recognizable it is too me. At the top, I can clearly tell exactly what the image is, but that becomes less true below and it appears much more abstract.
+
+b. Exercise 2
+  i. Data augmentation helps with overfitting in computer vision. It uses random transformations on the training examples so the model has more different images. This is added in the preprocessing, and uses things like flipping or zooming on the images.
+  ii. The solution given by the tutorial was:
+    history = model.fit_generator(
+      train_generator,
+      steps_per_epoch=100,
+      epochs=30,
+      validation_data=validation_generator,
+      validation_steps=50,
+      verbose=2)
+    This results in a val_loss of 0.4712 and a val_acc of 0.7800. The loss is 0.5601 and the accuracy is 0.7260, so it was good that the values were so close, especially compared to what we saw in Exercise 1.
+
+c. Exercise 3 skipped
