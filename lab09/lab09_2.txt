@@ -3,8 +3,19 @@ Elizabeth Koning
 
 Exercise 2
 
-a. TODO
+a.
+We are regularizing with respect to sparsity because it makes the model more efficient. When a weight goes to 0, we can ignore that parameter completely. That saves us computation time.
 
-b. TODO
+b.
+L1 regularization increases sparsity by adding a penalty of the absolute value of magnitude to the loss function. This not only encourages the values to be small as L2 regularization does, but it encourages them to be 0. The parameter that we're modifying works as a multiplier to this magnitude.
 
-c. TODO
+c.
+The default with regularization strength of 0.0 gave a LogLoss of 0.25 but a model size of 791.
+
+Increasing the parameter to 0.2 resulted in a LogLoss of 0.26 and a model size of 717. This is still much too high for the model size, but it doesn't seem to affect our LogLoss too much.
+
+Increasing the parameter to 0.5 resulted in a LogLoss of 0.26 and a model size of 631. So close!
+
+If we go all the way to 0.9 with the regularization strength, then I get a LogLoss of 0.26 and a model size of 553.
+
+The tutorial suggests using a regularization strength of 0.1. However, while the LogLoss is 0.26, the model size is 754, so it doesn't actually fulfill the criteria even closely.
