@@ -1,0 +1,33 @@
+CS 344 Lab 9
+Elizabeth Koning
+
+Exercise 1
+
+a.
+The linear regression approach has an RMSE of 0.45. This is also true for almost every training period, except for 6-7 when it dips to 0.44. Because the range of values is between 0 and 1, this is almost half of the total range. It also is very level throughout the training, not improving much over time.
+
+b.
+L2 Loss doesn't penalize misclassifications as probabilities very well. As it says in the lab, it sees being off by almost 10% as not a major difference.
+
+LogLoss does penalize these differences. With the scale that probabilities work at, LogLoss more accurately reflects the major differences.
+
+c.
+Logistic regression achieves a LogLoss of 0.53. This is even worse than with the linear regression, but it does have a better shape of improvement, although that doesn't help the result.
+
+d. TODO
+The AUC to start out is 0.71.
+
+When I increased the learning rate by a factor of 10, the LogLoss became 0.54 and the AUC became 0.78 with an accuracy of 0.77, so it did improve the AUC.
+
+The linear classifier they used was:
+  linear_classifier = train_linear_classifier_model(
+      learning_rate=0.000003,
+      steps=20000,
+      batch_size=500,
+      training_examples=training_examples,
+      training_targets=training_targets,
+      validation_examples=validation_examples,
+      validation_targets=validation_targets)
+and it had a LogLoss of 0.47 with a AUC of 0.81, and and accuracy of 0.78.
+
+The best AUC I achieved was starting at their linear classifier and I increased the batch_size to 600. It took forever to run, and resulted in a LogLoss of 0.47 and an AUC of 0.81. So nothing changed.
