@@ -1,0 +1,41 @@
+CS 344 Lab 10
+Elizabeth Koning
+Exercise 1
+
+a. Would you rather use TensorFlow or Keras to build your models?
+
+I would rather use Keras. Except for installation issues, it works more easily. I like the way it shows the layers of the model, building the model before running the data through it. It makes more sense to me the way it shows the layers.
+
+
+b. Tasks 1 & 2: Report your best hyper-parameter settings and their resulting performance on the testing dataset.
+
+Task 1:
+
+I increased the learning_rate to 0.05 and the batch_size to 20, and I got an RMSE of 143.35 on the training and 140.46 on the validation.
+
+I also tried to double the number of steps to be 1000, but that made it much worse.
+
+Their results using a decreased learning rate (0.001), 2000 steps, batch_size of 100, and [10, 10] for the hidden units obtained much better results than mine did. I was changing the parameters in the right direction, but because of the randomization and not changing the parameters by enough, theirs was more successful.
+
+Their model had an RMSE of 118.17 on the training and 117.51 on the validation.
+
+Task 2:
+  california_housing_test_data = pd.read_csv("https://download.mlcc.google.com/mledu-datasets/california_housing_test.csv", sep=",")
+
+  test_examples = preprocess_features(california_housing_test_data)
+  test_targets = preprocess_targets(california_housing_test_data)
+
+  predict_testing_input_fn = lambda: my_input_fn(test_examples,
+                                                 test_targets["median_house_value"],
+                                                 num_epochs=1,
+                                                 shuffle=False)
+
+  test_predictions = dnn_regressor.predict(input_fn=predict_testing_input_fn)
+  test_predictions = np.array([item['predictions'][0] for item in test_predictions])
+
+  root_mean_squared_error = math.sqrt(
+      metrics.mean_squared_error(test_predictions, test_targets))
+
+  print("Final RMSE (on test data): %0.2f" % root_mean_squared_error)
+
+The RMSE was 116.42.
