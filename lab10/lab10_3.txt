@@ -2,8 +2,46 @@ CS 344 Lab 10
 Elizabeth Koning
 Exercise 3
 
-a. TODO
+a. Task 1
+Originally, the classifier had a final accuracy on validation data of 0.84.
 
-b. TODO
+When I increased the learning rate to 0.08 and the batch size to 20, the final accuracy was 0.87. Its LogLoss error was lower, so I think that the learning rate was too high.
+
+With a learning rate of 0.04 and a batch size of 20, the final accuracy was also 0.87.
+  classifier = train_linear_classification_model(
+               learning_rate=0.04,
+               steps=100,
+               batch_size=20,
+               training_examples=training_examples,
+               training_targets=training_targets,
+               validation_examples=validation_examples,
+               validation_targets=validation_targets)
+
+Their solution used a learning rate of 0.03, 1000 steps, and a batch size of 30. The final accuracy there was 0.90, so somewhat better than the others.
+
+b. Task 2
+In their solution, they added the DNNClassifier object. With their parameters, it had a final accuracy of 0.95.
+
+I tried to change the parameters to get a better accuracy, but I still had an acuracy of 0.95.
+This set of parameters I tried:
+  classifier = train_nn_classification_model(
+      learning_rate=0.06,
+      steps=1000,
+      batch_size=30,
+      hidden_units=[100, 100],
+      training_examples=training_examples,
+      training_targets=training_targets,
+      validation_examples=validation_examples,
+      validation_targets=validation_targets)
+
+The accuracy on the test data was still 0.95.
 
 c. TODO
+
+With 1000 steps, the visualizations looked like noses or ears.
+
+With 100 steps, the visualizations are similarly shaped and colored, but they look more grainy and pixelated.
+
+With 10 steps, the visualizations look like there is less of a shape within them. Even with 100 steps, it looked like there was some coherency within each of the boxes, but with 10 this disappeared.
+
+On all three levels, the general shape and color of the visual is the same, but it had a much smoother appearance for the higher number of steps.
