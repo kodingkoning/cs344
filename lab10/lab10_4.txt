@@ -2,14 +2,176 @@ CS 344 Lab 10
 Elizabeth Koning
 Exercise 4
 
-a. TODO
+a. Task 1:
+Yes, A linear model could be preferable to a deep NN model. In this case, the linear model runs quickly. While we didn't run a NN in this task, based on running other NNs, I would guess it would take much longer. If we can achieve comparable results, then we would prefer the linear model. In some cases, a linear model might describe the information very well if there was a strong linear correlation.
 
-b. TODO
+The DNN in Task 2 ended up running fairly quickly, but the results were not as good. In this case, the linear model is a better fit right off the bat.
 
-c. TODO
+As it says at the end, if we need speed, then the linear model will likely be preferable.
 
-d. TODO
+b. Task 2
+The NN model here does worse than the linear model.
+
+Linear model results:
+  Training set metrics:
+  loss 11.363392
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.76696
+  auc 0.8719892
+  prediction/mean 0.4670376
+  precision 0.79685813
+  label/mean 0.5
+  average_loss 0.45453566
+  auc_precision_recall 0.8644807
+  accuracy 0.78572
+  ---
+  Test set metrics:
+  loss 11.399643
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.75624
+  auc 0.8699697
+  prediction/mean 0.46580473
+  precision 0.79277086
+  label/mean 0.5
+  average_loss 0.4559857
+  auc_precision_recall 0.861973
+  accuracy 0.77928
+  ---
+
+
+NN results:
+  Training set metrics:
+  loss 18.11206
+  accuracy_baseline 0.52
+  global_step 1000
+  recall 0.6666667
+  auc 0.6987179
+  prediction/mean 0.49498066
+  precision 0.61538464
+  label/mean 0.48
+  average_loss 0.7244824
+  auc_precision_recall 0.7311159
+  accuracy 0.64
+  ---
+  Test set metrics:
+  loss 14.889656
+  accuracy_baseline 0.52
+  global_step 1000
+  recall 0.61538464
+  auc 0.7403846
+  prediction/mean 0.48411074
+  precision 0.61538464
+  label/mean 0.52
+  average_loss 0.59558624
+  auc_precision_recall 0.7243498
+  accuracy 0.6
+  ---
+
+
+c. Task 3
+
+Embeddings make sense for sentiment analysis. Data for sentiment analysis would likely be quite sparse because there are so many words that won't be used in every review.
+
+Based on the output of the code, using embeddings improved the DNN to have similar success as the linear model did.
+Results:
+  Training set metrics:
+  loss 11.529713
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.87256
+  auc 0.86882526
+  prediction/mean 0.5483072
+  precision 0.7363127
+  label/mean 0.5
+  average_loss 0.46118852
+  auc_precision_recall 0.85794055
+  accuracy 0.78004
+  ---
+  Test set metrics:
+  loss 11.579734
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.86888
+  auc 0.86757743
+  prediction/mean 0.5476837
+  precision 0.7358401
+  label/mean 0.5
+  average_loss 0.46318933
+  auc_precision_recall 0.8557677
+  accuracy 0.77848
+  ---
+
+d. Task 4-5
+
+Horrible and awful have embeddings that are just different enough that I can read both of the words. This makes sense because they both convey similar sentiments and would be used similarly within a sentence because they are the same part of speech.
 
 e. TODO
+Task 6
+
+Initial results:
+  Training set metrics:
+  loss 10.7419
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.84536
+  auc 0.88587916
+  prediction/mean 0.5304717
+  precision 0.7824509
+  label/mean 0.5
+  average_loss 0.42967603
+  auc_precision_recall 0.88327134
+  accuracy 0.80516
+  ---
+  Test set metrics:
+  loss 11.2743435
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.83064
+  auc 0.87294555
+  prediction/mean 0.5283241
+  precision 0.77237225
+  label/mean 0.5
+  average_loss 0.45097375
+  auc_precision_recall 0.868424
+  accuracy 0.79292
+  ---
+
+With changing the classifier like this:
+classifier = tf.estimator.DNNClassifier(
+  feature_columns=feature_columns,
+  hidden_units=[10,20],
+  optimizer=my_optimizer
+)
+
+  Training set metrics:
+  loss 10.172858
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.8048
+  auc 0.8972023
+  prediction/mean 0.48984614
+  precision 0.83147365
+  label/mean 0.5
+  average_loss 0.40691432
+  auc_precision_recall 0.894948
+  accuracy 0.82084
+  ---
+  Test set metrics:
+  loss 10.845923
+  accuracy_baseline 0.5
+  global_step 1000
+  recall 0.78304
+  auc 0.8818311
+  prediction/mean 0.48687482
+  precision 0.8136326
+  label/mean 0.5
+  average_loss 0.43383697
+  auc_precision_recall 0.87893635
+  accuracy 0.80184
+  ---
+
+I also tried changing the optimizer to use Adam, but that made it much worse. So did increasing the learning rate with Adagrad.
 
 f. Successfully skipped.

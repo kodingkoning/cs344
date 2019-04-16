@@ -36,7 +36,7 @@ This set of parameters I tried:
 
 The accuracy on the test data was still 0.95.
 
-c. TODO
+c. Task 3
 
 With 1000 steps, the visualizations looked like noses or ears.
 
