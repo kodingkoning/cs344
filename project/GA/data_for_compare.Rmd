@@ -1,0 +1,147 @@
+---
+title: "data_for_compare"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ResistanceGA and Simulating Data
+
+In ga_simul_data.Rmd, I simulated data and ran it through the ResistanceGA optimization function. ResistanceGA uses a combination of different functions to prepare the data for the algorithm and then to finally run it and produce results.
+
+The major goal of the project is to compare Genetic Algorithms (particularly as implemented by ResistanceGA) to other AI algorithms. I am particularly interested in looking at Random Forests, Simulated Annealing, and Neural Network Image processing. In order to run these, I need to get the data out of ResistanceGA. Since these are all most straightforward to use in Python, I also need to get the data out of R and into a structure that is usable by Python.
+
+## Locating the Data
+
+### Surface Information
+
+When we plotted the samples, we saw the three layers of feature values. Each of these came from the resistance_surfaces object. According to the Environment panel, reistance_surfaces is a "Formal class RasterStack."
+
+Looking at the code, resistance_surfaces comes directly from ResistanceGA when we call data(resistance_surfaces). This is a dataset, in the format RasterStack, in ResistanceGA.
+
+However, resistance_surfaces only includes the information about the surfaces, not the effective distances between pairs.
+
+### Pairwise Effective Distances
+
+The two parts of the input to MS_optim are gdist.inputs and GA.inputs.
+
+GA.inputs includes the stack of resistance surfaces as well as information for running the GA, such as where to put the results and other parameters, none of which are data. We've already found the resistance surface information.
+
+The distance information must be in gdist.inputs or an input to gdist.inputs.
+
+Understanding the gdist.inputs object and how it was created is more complicated than it was for GA.inputs. It is calculated from gdist.prep, but that is based on a run of Run_gdistance, and that is based on results from Combine_Surfaces, which is based on results from another run of gdist.prep. This first run of gdist.prep has information based on samples, another dataset from ResistanceGA, and a parameter for 'commuteDistance.'
+
+#### samples
+
+Looking at samples, the data there is also the data in the file rResultssamples.txt. This means that we have easy access to the information in a text file if we know how to process it.
+
+```{r}
+library(ResistanceGA)
+data(samples)
+samples
+```
+
+#### sample.locales
+
+However, the object that is actually passed into gdist.prep is sample.locales, not samples itself. It is calculated this way:
+
+```{r}
+write.table(samples,file=paste0(write.dir,"samples.txt"),sep="\t",col.names=F,row.names=F)
+
+# Create a spatial points object for plotting
+sample.locales <- SpatialPoints(samples[,c(2,3)])
+
+sample.locales
+sample.locales@coords
+```
+
+This is a SpatialPoints class with 25 features. This matches the number of rows in the samples dataset. When we look at sample.locales@coords, the data is the same. If what we need to give the other algorithms is sample.locales, it will be just as simple to use the samples file.
+
+However, because the meanings of the headings and the data are not immediately obvious, looking at the output of the other layers should be helpful.
+
+#### gdist.inputs [1]
+
+The first gdist.inputs is calculated using gdist.prep.
+
+```{r}
+gdist.inputs <- gdist.prep(length(sample.locales),   ###Input parameters for gdistance package (dependency)
+                           samples = sample.locales,
+                           method = 'commuteDistance')
+gdist.inputs
+```
+
+Looking at gdist.inputs, it is not an easy structure to understand. The biggest part of it is a 25 x 300 sparse matrix. The 25 likely comes from that sample.locales has a length of 25, but the 300 is more puzzling.
+
+#### Resist
+
+Resist comes from Combine_Surfaces.
+
+```{r, indlude=false}
+PARM <- c(1, 250, 75, 1, 3.5, 150, 1, 350)
+
+GA.inputs <- GA.prep(ASCII.dir = r.stack,   ###Input parameters for Genetic Algorithm
+                     Results.dir = write.dir,
+                     method = "LL",
+                     max.cat = 500,
+                     max.cont = 500,
+                     seed = 555,
+                     parallel = 4)
+```
+
+```{r}
+Resist <- Combine_Surfaces(PARM = PARM,
+                           gdist.inputs = gdist.inputs,
+                           GA.inputs = GA.inputs,
+                           out = NULL,
+                           rescale = TRUE)
+
+Resist
+```
+
+Resist is of the class RasterLayer. Resist is the truth values from the simulation, so it will be important for comparison purposes, but it is not relevant at this stage.
+
+#### gdist.response
+
+After Resist comes gdist.response, which is from Run_gdistance. 
+
+```{r}
+gdist.response <- Run_gdistance(gdist.inputs = gdist.inputs,
+                                r = Resist)
+
+gdist.response
+```
+
+This takes in the difficult to read gdist inputs and Resist. It gives us a matrix of distances between each of the points. Getting this to a file outside of R should not be very difficult, and it may not be difficult to calculate elsewhere either, if I can find the relationship between it and samples.
+
+#### gdist.inputs [2]
+
+```{r}
+gdist.inputs <- gdist.prep(n.Pops = length(sample.locales),
+                           samples = sample.locales,
+                           response = as.vector(gdist.response),
+                           method = 'commuteDistance')
+
+gdist.inputs
+```
+
+The second gdist.inputs is also calculated using gdist.prep. Here, it uses sample.locales again, but it also uses gdist.response.
+
+### Location Conclusions
+
+For the resistance surface information, that should be accessed right from the resistance_surfaces dataset.
+
+For the distance information, it will be most feasible to access the information...
+
+[without running the last part, I expect it to be from gdist.response because gdist.inputs will probably be hard to understand and I think gdist.response is just effective distances between points.]
+
+## Accessing the data
+
+For exporting resistance_surfaces, we should...
+
+For exporting gdist.response, we can...
+
+The gdist.response information is very straightforward to access as it just needs to be printed to a file.
+
+resistance_surfaces is a RasterStack, but we also know how it can be separated into the three layers. In order to access it outside of R, we need to...

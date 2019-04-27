@@ -23,7 +23,7 @@ We will be using the rbenchmark library to time the algorithm.
 library(ResistanceGA)
 library(rbenchmark)
 
-write.dir <- "./rResults/"
+write.dir <- "./Results/"
 
 data(resistance_surfaces)
 data(samples)
@@ -131,3 +131,10 @@ plot(ms.stack)
 # Correlation between the two surfaces
 pairs(ms.stack)
 ```
+
+## Note on Timing
+
+The timing is not currently working. I am planning to simplify it to use the sys.time().
+
+The Genetic Algorithm is timed. However, it is important to keep in mind that different runs take signficantly different amounts of time to run, even with the same data and same seed. According to Professor Miller, the seeding doesn't work for the package. Finding a more accurate expression of the time is an issue that still needs to be addressed.
+

@@ -1,0 +1,90 @@
+Summary from multisurface optimization run conducted on 2019-04-27 
+ --- GA package summary output ---  
+
+
+-- Genetic Algorithm ------------------- 
+
+GA settings: 
+Type                  =  real-valued 
+Population size       =  100 
+Number of generations =  1000 
+Elitism               =  5 
+Crossover probability =  0.85 
+Mutation probability  =  0.125 
+Search domain = 
+      x1    x2    x3   x4   x5    x6 x7    x8
+lower  1 2e-03 2e-03 1.00  0.5 1e-03  1 2e-03
+upper  1 5e+02 5e+02 9.99 14.5 5e+02  1 5e+02
+Suggestions = 
+      x1          x2           x3 x4        x5        x6 x7           x8
+1      1  78.9893560   0.09751848  7 4.6247064 118.97741  1   0.34955715
+2      1 229.7364271   0.06704176  9 2.3964646 414.67875  1 192.29014298
+3      1   0.5958914   0.66148063  5 9.3388377 192.01182  1 323.96799913
+4      1 103.0881102   0.56727576  9 6.3520190 246.94446  1 388.48776842
+5      1 212.1570211 440.79663921  1 1.7355237 483.05236  1 362.52414641
+6      1   0.6656286   0.79247764  9 0.6236229  78.46957  1  83.23482354
+7      1   0.5964368   0.55458263  5 6.6228024 352.42718  1   0.50874289
+8      1   0.0136435   5.30664944  5 6.1895002 416.96172  1   0.89422948
+9      1   0.9789433  87.69726063  7 5.6566698 128.03414  1   0.18470429
+10     1 186.8087871 368.60570960  5 6.9586752 358.07450  1   0.91242314
+ ...                                                                    
+99     1   0.5208295   0.69876402  9 8.5164342  74.92469  1   0.06384288
+100    1   0.2252259   0.71983696  3 7.6735095 385.48837  1   0.80541087
+
+GA results: 
+Iterations             = 171 
+Fitness function value = 1580.696 
+Solution = 
+     x1       x2       x3       x4       x5      x6 x7       x8
+[1,]  1 322.0639 96.46416 1.681028 3.733139 188.773  1 451.0396
+
+ --- ResistanceGA summary output ---  
+
+Optimized using: commuteDistance 
+
+Objective function: LL 
+
+Surfaces included in optimization: 
+categorical continuous feature 
+
+k =  9 
+
+Minimum AIC: -3153.39242498342 
+
+AICc: -3131.39242498342 
+
+Pseudo marginal R-square (R2m): 0.999992303913969 
+Pseudo conditional R-square (R2c): 0.999999942895112 
+
+Log Likelihood: 1580.69621249171 
+
+Optimized values for each surface: 
+1 322.0639 96.46416 1.681028 3.733139 188.773 1 451.0396 
+
+
+----- Final MLPE model fit using REML ----- 
+Linear mixed model fit by REML ['lmerMod']
+
+REML criterion at convergence: -3135.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.0048 -0.4305 -0.0218  0.4169  4.0189 
+
+Random effects:
+ Groups   Name        Variance  Std.Dev.
+ pop      (Intercept) 1.105e-04 0.010511
+ Residual             7.957e-07 0.000892
+Number of obs: 300, groups:  pop, 25
+
+Fixed effects:
+             Estimate Std. Error t value
+(Intercept) 1.834e+01  4.205e-03    4361
+cd          3.726e+00  8.555e-05   43555
+
+Correlation of Fixed Effects:
+   (Intr)
+cd 0.000 
+
+
+Optimization took 6733.2 seconds to complete 
