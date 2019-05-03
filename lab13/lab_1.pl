@@ -20,7 +20,19 @@ tran(acht, eight).
 tran(neun, nine).
 
 listtran([G|X], [E|Y]) :- tran(G, E) , listtran(X, Y).
-listtran([], []). 
+listtran([], []).
 
 
 % b
+
+% modus ponens:
+  % p -> q
+  % p
+  % therefore q
+q :- p. % p -> q
+p. % p
+% ?- q. % evaluate truth of q
+% this implementation results in the output of q as true if we ask about the truth of q.
+% however, if we do not state that q depends on p, then if we inquire about p, it gives an error instead of saying it is false.
+% if we want it to volunteer the information about the implications of p being true, that's a different problem and not easy or possible to express with Prolog.
+% because of the difference between propositional logic and Prolog, I do not think there is a better way to represent modus ponens.
