@@ -1,0 +1,49 @@
+Exercise 13.2
+Elizabeth Koning
+
+Using ! as the symbol for not and v as the symbol for or
+
+Facts:
+  on(A, B)
+  on(B, C)
+  supports(Table, C)
+  supports(x, y) => on(y, x)
+  on(x, y) => above(x, y)
+  above(x, y) ^ above(y, z) => above(x, z)
+
+Prove:
+  above(A, Table)
+
+Proof:
+  all facts in conjunctive normal form:
+    supports(x, y) => on(y, x)
+    becomes
+    !supports(x, y) v on(y, x)
+
+    on(x, y) => above(x, y)
+    becomes
+    !on(x, y) v above(x, y)
+
+    above(x, y) ^ above(y, z) => above(x, z)
+    becomes
+    !above(x, y) v !above(y, z) v above(x, z)
+
+  Resolution: assume !above(A, Table)
+
+
+  [on(A, B)] [on(B, C)] [supports(Table, C)] [!supports(x, y) v on(y, x)] [!on(x, y) v above(x, y)] [!above(x, y) v !above(y, z) v above(x, z)]
+
+  unify()
+
+  doesn't work
+
+  unify(supports(Table, C), !supports(x, y))
+  [on(A, B)] [on(B, C)] [on(C, Table)] [!on(x, y) v above(x, y)] [!above(x, y) v !above(y, z) v above(x, z)]
+
+  unify(on(C, Table), !on(x, y))
+  [on(A, B)] [on(B, C)] [above(C, Table)] [!above(x, y) v !above(y, z) v above(x, z)]
+
+  unify(above(C, Table), !above(x, y))
+  [on(A, B)] [on(B, C)] [!above(Table, z) v above(C, z)]
+
+  unify()
