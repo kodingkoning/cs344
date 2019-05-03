@@ -28,22 +28,41 @@ Proof:
     becomes
     !above(x, y) v !above(y, z) v above(x, z)
 
-  Resolution: assume !above(A, Table)
+  Resolution: assume !above(A, Table) alongside the facts.
 
-
-  [on(A, B)] [on(B, C)] [supports(Table, C)] [!supports(x, y) v on(y, x)] [!on(x, y) v above(x, y)] [!above(x, y) v !above(y, z) v above(x, z)]
-
-  unify()
-
-  doesn't work
+  [!above(A, Table)] [on(A, B)] [on(B, C)] [supports(Table, C)] [!supports(x, y) v on(y, x)] [!on(x, y) v above(x, y)] [!above(x, y) v !above(y, z) v above(x, z)]
 
   unify(supports(Table, C), !supports(x, y))
-  [on(A, B)] [on(B, C)] [on(C, Table)] [!on(x, y) v above(x, y)] [!above(x, y) v !above(y, z) v above(x, z)]
+  [!above(A, Table)] [on(A, B)] [on(B, C)] [on(C, Table)] [!on(x, y) v above(x, y)] [!above(x, y) v !above(y, z) v above(x, z)]
+
+  unify(!above(A, Table), above(x, z))
+  [on(A, B)] [on(B, C)] [on(C, Table)] [!on(x, y) v above(x, y)] [!above(A, y) v !above(y, Table)]
+
+  unify(on(A, B), !on(x, y))
+  [on(B, C)] [on(C, Table)] [above(A, B)] [!above(A, y) v !above(y, Table)]
+
+  unify(above(A, B), !above(A, y))
+  [on(B, C)] [on(C, Table)] [!above(B, Table)]
+
+  introduce(!above(x, y) v !above(y, z) v above(x, z))
+  [on(B, C)] [on(C, Table)] [!above(B, Table)] [!above(x, y) v !above(y, z) v above(x, z)]
+
+  unify(!above(B, Table), above(x, z))
+  [on(B, C)] [on(C, Table)] [!above(B, y) v !above(y, Table)]
+
+  introduce(!on(x, y) v above(x, y))
+  [on(B, C)] [on(C, Table)] [!above(B, y) v !above(y, Table)] [!on(x, y) v above(x, y)]
+
+  unify(on(B, C), !on(x, y))
+  [on(C, Table)] [!above(B, y) v !above(y, Table)] [above(B, C)]
+
+  introduce(!on(x, y) v above(x, y))
+  [on(C, Table)] [!above(B, y) v !above(y, Table)] [above(B, C)] [!on(x, y) v above(x, y)]
 
   unify(on(C, Table), !on(x, y))
-  [on(A, B)] [on(B, C)] [above(C, Table)] [!above(x, y) v !above(y, z) v above(x, z)]
+  [!above(B, y) v !above(y, Table)] [above(B, C)] [above(C, Table)]
 
-  unify(above(C, Table), !above(x, y))
-  [on(A, B)] [on(B, C)] [!above(Table, z) v above(C, z)]
+  unify(!above(B, y), above(B, C))
+  [!above(C, Table)] [above(C, Table)]
 
-  unify()
+  Which leaves us with the contradiction of !above(C, Table) ^ above(C, Table)
