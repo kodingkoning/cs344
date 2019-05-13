@@ -138,10 +138,24 @@ For the distance information, it will be most feasible to access the information
 
 ## Accessing the data
 
-For exporting resistance_surfaces, we should...
+For exporting resistance_surfaces, can start by trying to write it to a file.
 
-For exporting gdist.response, we can...
+```{r}
+library(ResistanceGA)
+data(resistance_surfaces)
+write.csv(raster::as.matrix(resistance_surfaces$categorical), "data/resistance_surfaces_cate.csv")
+write.csv(raster::as.matrix(resistance_surfaces$continuous), "data/resistance_surfaces_cont.csv")
+write.csv(raster::as.matrix(resistance_surfaces$feature), "data/resistance_surfaces_feat.csv")
+```
+
+Now we have all of these in .csv files.
+
+For exporting gdist.response, we can also try to send it to a file.
+
+```{r}
+write.csv(raster::as.matrix(gdist.response), "data/gdist_response.csv")
+```
 
 The gdist.response information is very straightforward to access as it just needs to be printed to a file.
 
-resistance_surfaces is a RasterStack, but we also know how it can be separated into the three layers. In order to access it outside of R, we need to...
+Now that all of the data is in CSV files, the question is how to apply it in other algorithms.

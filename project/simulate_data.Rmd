@@ -1,0 +1,81 @@
+---
+title: "AI simulate data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Install RestistanceGA
+```{r}
+# Install 'devtools' package, if needed
+if(!("devtools" %in% list.files(.libPaths()))) {
+install.packages("devtools", repo = "http://cran.rstudio.com", dep = TRUE)
+}
+# Download package, build vignette
+devtools::install_github("wpeterman/ResistanceGA",
+build_vignettes = TRUE)
+```
+
+## Loading the package
+
+```{r}
+library(ResistanceGA)
+```
+
+## Example function use
+
+```{r}
+if("ResistanceGA_Examples"%in%dir("~/cs/344/")==FALSE)
+  dir.create(file.path("~/cs/344", "ResistanceGA_Examples"))
+
+# Create a subdirectory for the first example
+if("SingleSurface"%in%dir("~/cs/344/ResistanceGA_Examples")==FALSE)
+  dir.create(file.path("~/cs/344/ResistanceGA_Examples","SingleSurface"))
+
+# Directory to write .asc files and results
+write.dir <- "~/cs/344/ResistanceGA_Examples/SingleSurface/"
+
+# Give path to CIRCUITSCAPE .exe file
+CS.program <- paste('"~/cs/344/Program Files/Circuitscape/cs_run.exe"')
+```
+
+
+load reistance surfaces...
+```{r}
+data(resistance_surfaces)
+continuous <- resistance_surfaces[[2]]
+writeRaster(continuous,
+  filename = paste0(write.dir,"cont.asc"),
+  overwrite = TRUE)
+```
+
+```{r}
+data(samples)
+write.table(samples,file=paste0(write.dir,"samples.txt"),sep="\t",col.names=F,row.names=F)
+
+# Create a spatial points object for plotting
+sample.locales <- SpatialPoints(samples[,c(2,3)])
+```
+
+plot
+```{r}
+plot(continuous)
+plot(sample.locales, pch = 16, col = "blue", add = TRUE) # Add points
+```
+
+## Prepare the data for optimization
+
+```{r}
+# Set the random number seed to reproduce the results presented
+GA.inputs <- GA.prep(ASCII.dir = write.dir,
+                      max.cat = 500,
+                      max.cont = 500,
+                      select.trans = "M",
+                      method = "LL",
+                      seed = 555)
+CS.inputs <- CS.prep(n.Pops = length(sample.locales),
+                      CS_Point.File = paste0(write.dir,"samples.txt"),
+                      CS.program = CS.program)
+```
